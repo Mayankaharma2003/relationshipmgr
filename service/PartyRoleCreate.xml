@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+    <service verb="create" noun="PartyRole" type="inline" >
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+            <parameter name="roleTypeId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId" required="true"/>
+        </out-parameters>
+        <actions>
+            <entity-make-value entity-name="PartyRole" value-field="newRole"/>
+            <entity-set value-field="newRole" include="all"/>
+            <entity-create value-field="newRole" />
+        </actions>
+    </service>
+</services>
