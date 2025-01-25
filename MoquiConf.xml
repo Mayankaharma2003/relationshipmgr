@@ -1,4 +1,8 @@
-<entity-facade>
-    <entity-group name="default" entity-location="component://relationshipmgr/entities"/>
-</entity-facade>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<moqui-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+    <screen-facade>
+        <screen location="component://webroot/screen/webroot/apps.xml" >
+            <subscreens-item name="party" location="component://relationshipmgr/screen/screen.xml" />
+        </screen>
+    </screen-facade>
+</moqui-conf>
