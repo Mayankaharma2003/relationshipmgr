@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+
+    <service verb="create" noun="PartyContactMech">
+        <in-parameters>
+            <auto-parameters include="pk" required="true"/>
+            <auto-parameters include="nonpk"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId" required="true"/>
+        </out-parameters>
+        <actions>
+            <entity-make-value entity-name="PartyContactMech" value-field="newPartyContact"/>
+            <entity-set value-field="newPartyContact" include="all"/>
+            <entity-create value-field="newPartyContact"/>
+        </actions>
+    </service>
+</services>

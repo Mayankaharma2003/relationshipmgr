@@ -48,7 +48,8 @@
         <field name="partyId" type="id" is-pk="true" />
         <field name="contactMechId" type="id" is-pk="true" />
         <field name="contactMechPurposeId" type="id" is-pk="true"/>
-        <field name="fromDate" type="date" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
         <relationship type="one" related="ContactMech"/>
         <relationship type="one" related="ContactMechPurpose" />
     </entity>
