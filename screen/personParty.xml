@@ -6,10 +6,9 @@
         <container-dialog id="CreatePartyDialog" button-text="Create Party">
             <form-single name="CreatePartyPerson" transition="createPartyAsPerson">
 
-                <auto-fields-entity entity-name="Party" include="pk" field-type="edit" auto-columns="false"/>
-                <auto-fields-entity entity-name="RoleType" include="pk" field-type="edit" auto-columns="false"/>
-                <auto-fields-entity entity-name="Person" include="nonpk" field-type="edit" auto-columns="false"/>
-
+<!--                <auto-fields-entity entity-name="Party" include="pk" field-type="edit" />-->
+                <auto-fields-entity entity-name="Person" include="nonpk" field-type="edit"/>
+                <auto-fields-entity entity-name="PartyRole" include="all" field-type="edit"/>
                 <field name="submitButton">
                     <default-field title="Create">
                         <submit/>

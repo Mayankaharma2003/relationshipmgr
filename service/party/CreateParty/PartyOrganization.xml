@@ -5,16 +5,15 @@
         <in-parameters>
             <auto-parameters entity-name="Party" include="pk"/>
             <auto-parameters entity-name="Organization" include="nonpk"/>
-            <parameter name="roleTypeId"/>
+            <parameter name="roleTypeEnumId"/>
         </in-parameters>
         <out-parameters>
             <parameter name="partyId"/>
         </out-parameters>
         <actions>
-            <set field="partyTypeId" value="ORGANIZATION"/>
+            <set field="partyTypeEnumId" value="ORGANIZATION"/>
             <service-call name="party/PartyCreate.create#Party" in-map="context"/>
             <service-call name="party/OrganizationCreate.create#Organization" in-map="context" out-map="context"/>
-            <service-call name="party/CreateRole.create#RoleType" in-map="context"/>
             <service-call name="party/PartyRoleCreate.create#PartyRole" in-map="context"/>
         </actions>
     </service>

@@ -3,16 +3,18 @@
 
     <service verb="create" noun="PostalContactMech" type="inline" >
         <in-parameters>
-            <auto-parameters entity-name="ContactMech" include="pk" required="true"/>
+            <auto-parameters entity-name="PartyContactMech" include="pk"/>
+            <auto-parameters entity-name="ContactMechPurpose" include="all"/>
             <auto-parameters entity-name="TelecomNumber" include="nonpk"/>
         </in-parameters>
         <out-parameters>
             <parameter name="contactMechId" required="true"/>
         </out-parameters>
         <actions>
-            <set field="contactMechTypeEnumId" value="POSTAL_ADDRESS"/>
+            <set field="contactMechTypeEnumId" value="TELECOM_NUMBER"/>
             <service-call name="contact/ContactMechCreate.create#ContactMech" in-map="context"/>
             <service-call name="contact/AddTelecomNumber.create#TelecomNumber" in-map="context"/>
+            <service-call name="contact/partyContact/PartyContactMechCreate.create#PartyContactMech" in-map="context"/>
         </actions>
     </service>
 </services>
