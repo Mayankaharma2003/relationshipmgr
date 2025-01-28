@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
+        require-authentication="anonymous-all">
+
+<!--    <transition name="createPartyAsOrganization">-->
+<!--        <actions>-->
+<!--            <service-call name="party.CreateParty.PartyOrganization.create#PartyOrganization" in-map="context" out-map="context"/>-->
+<!--        </actions>-->
+<!--        <default-response url="."/>-->
+<!--    </transition>-->
+
+<!--    <transition name="createPartyAsPerson">-->
+<!--        <actions>-->
+<!--            <service-call name="party.CreateParty.PartyPerson.create#PartyPerson" in-map="context" out-map="context"/>-->
+<!--        </actions>-->
+<!--        <default-response url="."/>-->
+<!--    </transition>-->
+
+<!--    <transition name="addPostalAddress">-->
+<!--        <actions>-->
+<!--            <service-call name="contact.CreateContact.PostalContactMech.create#PostalContactMech" in-map="context" out-map="context"/>-->
+<!--        </actions>-->
+<!--        <default-response url="."/>-->
+<!--    </transition>-->
+
+<!--    <transition name="addTelecomNumber">-->
+<!--        <actions>-->
+<!--            <service-call name="contact.CreateContact.TelecomContactMech.create#PostalContactMech" in-map="context" out-map="context"/>-->
+<!--        </actions>-->
+<!--        <default-response url="."/>-->
+<!--    </transition>-->
+<!--    <transition name="addEmailAddress">-->
+<!--        <actions>-->
+<!--            <service-call name="contact.CreateContact.ElectronicContactMech.create#PartyElectronicAddress" in-map="context" out-map="context"/>-->
+<!--        </actions>-->
+<!--        <default-response url="."/>-->
+<!--    </transition>-->
+    <transition name="createPartyAsOrganization">
+        <actions>
+            <set field="partyTypeEnumId" value="Organization"/>
+            <service-call name="create#Party" in-map="context" out-map="context"/>
+            <service-call name="create#Organization" in-map="context" out-map="context"/>
+            <service-call name="create#PartyRole" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+    <transition name="addPartyRole">
+        <actions>
+            <service-call name="create#PartyRole" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="createPartyAsPerson">
+        <actions>
+            <set field="partyTypeEnumId" value="PERSON"/>
+            <service-call name="create#Party" in-map="context" out-map="context"/>
+            <service-call name="create#Person" in-map="context" out-map="context"/>
+            <service-call name="create#PartyRole" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="addPostalAddress">
+        <actions>
+            <set field="contactMechTypeEnumId" value="POSTAL_ADDRESS"/>
+            <service-call name="create#ContactMech" in-map="context" out-map="context"/>
+            <service-call name="create#PostalAddress" in-map="context" out-map="context"/>
+            <service-call name="create#PartyContactMech" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="addTelecomNumber">
+        <actions>
+            <set field="contactMechTypeEnumId" value="TELECOM_NUMBER"/>
+            <service-call name="create#ContactMech" in-map="context" out-map="context"/>
+            <service-call name="create#TelecomNumber" in-map="context" out-map="context"/>
+            <service-call name="create#PartyContactMech" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="addEmailAddress">
+        <actions>
+            <set field="contactMechTypeEnumId" value="EMAIL_ADDRESS"/>
+            <service-call name="create#ContactMech" in-map="context" out-map="context"/>
+            <service-call name="create#EmailAddress" in-map="context" out-map="context"/>
+            <service-call name="create#PartyContactMech" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
+    <widgets>
+        <container-dialog id="partyPerson" button-text="Create Party">
+            <form-single name="Person" transition="createPartyAsPerson">
+                <auto-fields-entity entity-name="oms.party.Party" field-type="edit" include="pk"/>
+                <field name="roleTypeId">
+                    <default-field title="RoleType">
+                        <text-area/>
+                    </default-field>
+                </field>
+                <auto-fields-entity entity-name="oms.party.Person" field-type="edit" include="nonpk"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+        <container-dialog id="partyRole" button-text="Add Party Role">
+            <form-single name="Role" transition="addPartyRole">
+                <auto-fields-entity entity-name="oms.party.PartyRole" field-type="edit" include="pk"/>
+                <field name="submitButton"><default-field title="Add"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+
+        <container-dialog id="partyOrganization" button-text="Create Organization">
+            <form-single name="Organization" transition="createPartyAsOrganization">
+                <auto-fields-entity entity-name="oms.party.PartyRole" field-type="edit" include="pk"/>
+                <auto-fields-entity entity-name="oms.party.Party" field-type="edit" include="pk"/>
+                <auto-fields-entity entity-name="oms.party.Organization" field-type="edit" include="nonpk"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+
+        <container-dialog id="createPostalAddress" button-text="Add address">
+            <form-single name="PostalAddress" transition="addPostalAddress">
+                <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>
+                <auto-fields-entity entity-name="oms.contactMech.PartyContactMech" field-type="edit"/>
+                <auto-fields-entity entity-name="oms.contactMech.PostalAddress" field-type="edit" include="nonpk"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+
+        <container-dialog id="createTelecomNumber" button-text="Add Telecom Number">
+            <form-single name="TelecomNumber" transition="addTelecomNumber">
+                <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>
+                <auto-fields-entity entity-name="oms.contactMech.PartyContactMech" field-type="edit"/>
+                <auto-fields-entity entity-name="oms.contactMech.TelecomNumber" field-type="edit" />
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+
+        <container-dialog id="createEmailAddress" button-text="Add Email address">
+            <form-single name="EmailAddress" transition="addEmailAddress">
+                <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>
+                <auto-fields-entity entity-name="oms.contactMech.PartyContactMech" field-type="edit"/>
+                <auto-fields-entity entity-name="oms.contactMech.EmailAddress" field-type="edit" />
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+    </widgets>
+</screen>
