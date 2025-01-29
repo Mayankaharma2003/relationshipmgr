@@ -4,13 +4,13 @@
     <entity entity-name="ContactMech" package="oms.contactMech">
         <field name="contactMechId" type="id" is-pk="true" />
         <field name="contactMechTypeEnumId" type="id" />
-        <relationship type="one" related="Enumeration">
+        <relationship type="one" related="Enumeration" short-alias="enumType">
             <key-map field-name="contactMechTypeEnumId"/>
         </relationship>
-        <relationship type="one-nofk" related="TelecomNumber"/>
-        <relationship type="one-nofk" related="PostalAddress"/>
-        <relationship type="one-nofk" related="EmailAddress"/>
-        <relationship type="many" related="PartyContactMech"/>
+        <relationship type="one-nofk" related="TelecomNumber" short-alias="telecom"/>
+        <relationship type="one-nofk" related="PostalAddress" short-alias="postal"/>
+        <relationship type="one-nofk" related="EmailAddress" short-alias="email"/>
+        <relationship type="many" related="PartyContactMech" short-alias="contactMech"/>
         <seed-data>
             <moqui.basic.EnumerationType description="Ways of contact" enumTypeId="ContactMechType"/>
             <moqui.basic.Enumeration description="Party TELECOM_NUMBER" enumId="TELECOM_NUMBER" enumTypeId="ContactMechType"/>
@@ -18,10 +18,11 @@
             <moqui.basic.Enumeration description="Party EMAIL_ADDRESS" enumId="EMAIL_ADDRESS" enumTypeId="ContactMechType"/>
         </seed-data>
         <master name="ContactMech">
-            <detail relationship="TelecomNumber" use-master="ContactMech"/>
-            <detail relationship="PostalAddress" use-master="ContactMech"/>
-            <detail relationship="ElectronicAddress" use-master="ContactMech"/>
-            <detail relationship="PartyContactMech" use-master="ContactMech"/>
+            <detail relationship="enumType"/>
+            <detail relationship="telecom" />
+            <detail relationship="postal" />
+            <detail relationship="email" />
+            <detail relationship="contactMech" />
         </master>
     </entity>
 
@@ -59,9 +60,6 @@
             <oms.contactMech.ContactMechPurpose contactMechPurposeId="OFFICE"/>
             <oms.contactMech.ContactMechPurpose contactMechPurposeId="WORK"/>
         </seed-data>
-        <master name="ContactMechPurpose">
-            <detail relationship="PartyContactMech" use-master="ContactMechPurpose"/>
-        </master>
     </entity>
 
 
