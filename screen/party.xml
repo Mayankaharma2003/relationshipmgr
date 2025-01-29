@@ -95,11 +95,9 @@
         <container-dialog id="partyPerson" button-text="Create Party">
             <form-single name="Person" transition="createPartyAsPerson">
                 <auto-fields-entity entity-name="oms.party.Party" field-type="edit" include="pk"/>
-                <field name="roleTypeId">
-                    <default-field title="RoleType">
-                        <text-area/>
-                    </default-field>
-                </field>
+                <auto-fields-entity entity-name="oms.party.PartyRole" field-type="edit">
+                    <exclude field-name="partyId"/>
+                </auto-fields-entity>
                 <auto-fields-entity entity-name="oms.party.Person" field-type="edit" include="nonpk"/>
                 <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
@@ -113,8 +111,10 @@
 
         <container-dialog id="partyOrganization" button-text="Create Organization">
             <form-single name="Organization" transition="createPartyAsOrganization">
-                <auto-fields-entity entity-name="oms.party.PartyRole" field-type="edit" include="pk"/>
                 <auto-fields-entity entity-name="oms.party.Party" field-type="edit" include="pk"/>
+                <auto-fields-entity entity-name="oms.party.PartyRole" field-type="edit">
+                    <exclude field-name="partyId"/>
+                </auto-fields-entity>
                 <auto-fields-entity entity-name="oms.party.Organization" field-type="edit" include="nonpk"/>
                 <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
@@ -123,15 +123,10 @@
         <container-dialog id="createPostalAddress" button-text="Add address">
             <form-single name="PostalAddress" transition="addPostalAddress">
                 <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>
-                <field name="fromDate">
-                    <default-field>
-                        <date-time/>
-                    </default-field>
-                </field>
-                <auto-fields-entity entity-name="Person" include="pk" field-type="edit" />
-                <auto-fields-entity entity-name="ContactMechPurpose" include="pk" field-type="edit"/>
-<!--                <auto-fields-entity entity-name="oms.contactMech.PartyContactMech" field-type="edit"/>-->
-                <auto-fields-entity entity-name="oms.contactMech.PostalAddress" field-type="edit" include="nonpk"/>
+                <auto-fields-entity entity-name="PartyContactMech" include="pk" field-type="edit">
+                    <exclude field-name="contactMechId"/>
+                </auto-fields-entity>
+                <auto-fields-entity entity-name="PostalAddress" field-type="edit" include="nonpk"/>
                 <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
         </container-dialog>
@@ -139,30 +134,21 @@
         <container-dialog id="createTelecomNumber" button-text="Add Telecom Number">
             <form-single name="TelecomNumber" transition="addTelecomNumber">
                 <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>
-                <field name="fromDate">
-                    <default-field>
-                        <date-time/>
-                    </default-field>
-                </field>
-                <auto-fields-entity entity-name="Person" include="pk" field-type="edit" />
-                <auto-fields-entity entity-name="ContactMechPurpose" include="pk" field-type="edit"/>                <auto-fields-entity entity-name="oms.contactMech.TelecomNumber" field-type="edit" />
+                <auto-fields-entity entity-name="PartyContactMech" include="pk" field-type="edit">
+                    <exclude field-name="contactMechId"/>
+                </auto-fields-entity>
+                <auto-fields-entity entity-name="TelecomNumber" field-type="edit" include="nonpk"/>
                 <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
         </container-dialog>
 
         <container-dialog id="createEmailAddress" button-text="Add Email address">
             <form-single name="EmailAddress" transition="addEmailAddress">
-<!--                <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>-->
-<!--                <auto-fields-entity entity-name="oms.contactMech.PartyContactMech" field-type="edit"/>-->
-                <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>
-                <field name="fromDate">
-                    <default-field>
-                        <date-time/>
-                    </default-field>
-                </field>
-                <auto-fields-entity entity-name="Person" include="pk" field-type="edit" />
-                <auto-fields-entity entity-name="ContactMechPurpose" include="pk" field-type="edit"/>
-                <auto-fields-entity entity-name="oms.contactMech.EmailAddress" field-type="edit" />
+               <auto-fields-entity entity-name="oms.contactMech.ContactMech" field-type="edit" include="pk"/>
+                <auto-fields-entity entity-name="PartyContactMech" include="pk" field-type="edit">
+                    <exclude field-name="contactMechId"/>
+                </auto-fields-entity>
+                <auto-fields-entity entity-name="EmailAddress" field-type="edit" include="nonpk"/>
                 <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
         </container-dialog>
